@@ -1,26 +1,23 @@
+// src/App.tsx
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Selection from './components/Selection';
+import Auth from './containers/Login/Auth';
+import Dashboard from './components/Dashboard';
+import ContractPage from './components/ContractPage';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App: React.FC = () => {
+    return (
+        <Router>
+            <Switch>
+                <Route path="/" exact component={Selection} />
+                <Route path="/vendor-auth" render={() => <Auth type="vendor" />} />
+                <Route path="/servicer-auth" render={() => <Auth type="servicer" />} />
+                <Route path="/dashboard" component={Dashboard} /> {/* New route */}
+                <Route path="/contract/:contractId" component={ContractPage} />
+            </Switch>
+        </Router>
+    );
+};
 
 export default App;
