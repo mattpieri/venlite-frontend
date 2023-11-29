@@ -260,12 +260,12 @@ const columns: GridColDef[] = [
 const CustomTable: React.FC = () => {
     return (
         <div style={{ height: 1000, width: '100%' }}>
+            <h2>Contracts</h2>
             <DataGrid
                 rows={data}
                 columns={columns}
                 autoPageSize={true}
                 checkboxSelection
-
             />
         </div>
     );

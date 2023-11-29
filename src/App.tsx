@@ -5,18 +5,15 @@ import Selection from './components/Selection';
 import Auth from './containers/Login/Auth';
 import Dashboard from './components/Dashboard';
 import ContractPage from './components/ContractPage';
+import ResponsiveDrawer from './components/SidePanel'
 
 const App: React.FC = () => {
     return (
         <Router>
-            <Switch>
-                <Route path="/" exact component={Selection} />
-                <Route path="/vendor-auth" render={() => <Auth type="vendor" />} />
-                <Route path="/servicer-auth" render={() => <Auth type="servicer" />} />
-                <Route path="/dashboard" component={Dashboard} /> {/* New route */}
-                <Route path="/contract/:contractId" component={ContractPage} />
-            </Switch>
+            <ResponsiveDrawer></ResponsiveDrawer>
+
         </Router>
+
     );
 };
 
