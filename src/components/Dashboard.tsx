@@ -2,6 +2,11 @@
 import React from 'react';
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
+import {Button, Typography} from "@mui/material";
+import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
+import Box from "@mui/material/Box";
+import ContractEdit from "./ContractEdit";
+import Modal from "@mui/material/Modal";
 
 const data = [
     {
@@ -234,6 +239,16 @@ const data = [
     // Add 10 more rows...
 ];
 
+const style = {
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 600,
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+};
 
 
 const columns: GridColDef[] = [
@@ -243,7 +258,7 @@ const columns: GridColDef[] = [
         flex: 1,
         groupable: true, // Enable grouping for the 'location' column
     },
-    { field: 'client', headerName: 'Client', flex: 1 },
+    { field: 'client', headerName: 'Vendor', flex: 1 },
     { field: 'project', headerName: 'Project', flex: 1 },
     {
         field: 'contract',
@@ -258,16 +273,50 @@ const columns: GridColDef[] = [
 
 
 const CustomTable: React.FC = () => {
+    const [openContractDetails, setOpenContractDetails] = React.useState(false);
+    const handleContractDetailsOpen = () => setOpenContractDetails(true);
+    const handleContractDetailsClose = () => setOpenContractDetails(false);
+
     return (
         <div style={{ height: 1000, width: '100%' }}>
-            <h2>Contracts</h2>
+
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Typography variant="h4">Contracts</Typography>
+                <Button onClick={handleContractDetailsOpen}
+                        variant="contained"
+                        startIcon={<AddTwoToneIcon style={{ fontSize: 'small' }} />}
+                        style={{
+                            backgroundColor: 'purple', // Set the button color to purple
+                            color: 'darkpurple' // Set the text color to dark purple (replace with actual color code)
+                        }}
+                >
+                Add contract
+                </Button>
+            </div>
+            <br/>
             <DataGrid
                 rows={data}
                 columns={columns}
                 autoPageSize={true}
                 checkboxSelection
             />
+            <Modal
+                open={openContractDetails}
+                onClose={handleContractDetailsClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                BackdropProps={{
+                    style: {
+                        backgroundColor: 'rgba(255, 255, 255, 0.7)', // Or any color with desired opacity
+                    },
+                }}
+            >
+                <Box sx={style}>
+                    <ContractEdit/>
+                </Box>
+            </Modal>
         </div>
+
     );
 };
 

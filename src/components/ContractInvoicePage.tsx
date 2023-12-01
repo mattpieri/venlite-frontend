@@ -38,6 +38,20 @@ const renderStatus = (params: GridRenderCellParams) => {
     );
 };
 
+
+const renderPdfLink = (params: GridRenderCellParams) => (
+    <Typography
+        component="a"
+        href="https://www.google.com" // Replace with the actual link to the PDF file
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ textDecoration: 'underline', color: 'blue', cursor: 'pointer' }}
+    >
+        {params.row.pdfFileName}
+    </Typography>
+);
+
+
 const formatCurrency = (amount: number): string => {
     return `$${amount.toFixed(2)}`; // Adjust formatting as needed
 };
@@ -56,7 +70,7 @@ const columns: GridColDef[] = [
         align: 'center',
         headerAlign: 'center'
     },
-    { field: 'description', headerName: 'Description', width: 150,
+    { field: 'invoiceNumber', headerName: 'Invoice Number', width: 150,
         align: 'center',
 
         headerAlign: 'center' },
@@ -69,22 +83,31 @@ const columns: GridColDef[] = [
         valueGetter: (params) =>
             new Date(params.value), // Transform the string value to a Date object
     },
+    {
+        field: 'pdfLink',
+        headerName: 'PDF',
+        width: 150,
+        renderCell: renderPdfLink,
+        align: 'center',
+        headerAlign: 'center',
+    }
 
     // ... more columns if needed
 ];
 
-export default function DataTable() {
+export default function ContractInvoiceTable() {
     const [openScheduledPayments, setScheduledPayments] = React.useState(false);
     const handleOpenScheduledPayments = () => setScheduledPayments(true);
     const handleCloseScheduledPayments = () => setScheduledPayments(false);
 
 
     const [gridRows, setGridRows] = useState([
-        { id: 1, description: 'Initial Payment', amount: 500, dueDate: '2023-01-15', status: 'Pending' },
-        { id: 2, description: 'Monthly Payment', amount: 1500, dueDate: '2023-02-15', status: 'Paid' },
-        { id: 3, description: 'Monthly Payment', amount: 200, dueDate: '2023-03-15', status: 'Delinquent' },
+        { id: 1, invoiceNumber: '5ff3-23423-fsdfs52', amount: 500, dueDate: '2023-01-15', status: 'Pending', pdfFileName: 'Invoice-001.pdf' },
+        { id: 2, invoiceNumber: '5ff3-23423-fsdfs52', amount: 1500, dueDate: '2023-02-15', status: 'Paid', pdfFileName: 'Invoice-002.pdf' },
+        { id: 3, invoiceNumber: '5ff3-23423-fsdfs52', amount: 200, dueDate: '2023-03-15', status: 'Delinquent', pdfFileName: 'Invoice-003.pdf' },
         // Add more rows as needed
     ]);
+
 
 
     const onDataChange = (newData: any) => {
@@ -114,34 +137,34 @@ export default function DataTable() {
 
     return (
         <div>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Typography variant="h5">Scheduled Payments</Typography>
-            <Button onClick={handleOpenScheduledPayments}><AddTwoToneIcon style={{ color: 'purple' }} /></Button>
-        </div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Typography variant="h5">Invoices</Typography>
+                <Button onClick={handleOpenScheduledPayments}><AddTwoToneIcon style={{ color: 'purple' }} /></Button>
+            </div>
 
-        <div style={{ height: 400, width: '100%' }}>
-            <DataGrid
-                rows={gridRows}
-                columns={columns}
-                checkboxSelection
-            />
-        </div>
+            <div style={{ height: 400, width: '100%' }}>
+                <DataGrid
+                    rows={gridRows}
+                    columns={columns}
+                    checkboxSelection
+                />
+            </div>
 
-        <Modal
-            open={openScheduledPayments}
-            onClose={handleCloseScheduledPayments}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-            BackdropProps={{
-                style: {
-                    backgroundColor: 'rgba(255, 255, 255, 0.7)', // Or any color with desired opacity
-                },
-            }}
-        >
-            <Box sx={style}>
-                <ScheduledPaymentsRowEdit label={"Add Scheduled Payment"} goBack={handleCloseScheduledPayments} onDataChange={onDataChange} currentValue={{}} />
-            </Box>
-        </Modal>
+            <Modal
+                open={openScheduledPayments}
+                onClose={handleCloseScheduledPayments}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                BackdropProps={{
+                    style: {
+                        backgroundColor: 'rgba(255, 255, 255, 0.7)', // Or any color with desired opacity
+                    },
+                }}
+            >
+                <Box sx={style}>
+                    <ScheduledPaymentsRowEdit label={"Add Scheduled Payment"} goBack={handleCloseScheduledPayments} onDataChange={onDataChange} currentValue={{}} />
+                </Box>
+            </Modal>
         </div>
     );
 }

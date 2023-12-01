@@ -3,9 +3,9 @@ import dayjs from "dayjs";
 import ResponsiveDatePickers from "./InputDateComponent";
 import BasicTextFields from "./InputTextField";
 import InputSelect from "./InputSelect";
-import {Table, TableBody, TableCell, TableContainer, TableRow, Typography} from "@mui/material";
+import {Button, Table, TableBody, TableCell, TableContainer, TableRow, Typography} from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-
+import ArticleTwoToneIcon from '@mui/icons-material/ArticleTwoTone';
 
 const ContractEdit: React.FC = () => {
 
@@ -193,10 +193,11 @@ const ContractEdit: React.FC = () => {
             // Render the table if no edit state is set
             return (
                 <div>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Edit Contract Details
-                    </Typography>
-                    <br/>
+
+                    <div style={{ display: 'flex', justifyContent: 'center' }}> {/* Centering the icon */}
+                        <ArticleTwoToneIcon style={{  fontSize: '80px' }} /> {/* Setting icon color */}
+                    </div>
+                    <h2 style={{ textAlign: 'center' }}>{'Contract'}</h2>
                     <TableContainer>
                         <Table>
                             <TableBody>
@@ -292,9 +293,11 @@ const ContractEdit: React.FC = () => {
                                     </TableCell>
                                 </TableRow>
 
+
                             </TableBody>
                         </Table>
                     </TableContainer>
+
                 </div>);
         }
     };

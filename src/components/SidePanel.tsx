@@ -21,7 +21,21 @@ import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom";
 import Selection from "./Selection";
 import Auth from "../containers/Login/Auth";
 import ContractPage from "./ContractPage";
-
+import ProjectTable from "./ProjectsTable";
+import FolderCopyTwoToneIcon from '@mui/icons-material/FolderCopyTwoTone';
+import ArticleTwoToneIcon from '@mui/icons-material/ArticleTwoTone';
+import HailTwoToneIcon from '@mui/icons-material/HailTwoTone';
+import DescriptionTwoToneIcon from '@mui/icons-material/DescriptionTwoTone';
+import RequestQuoteTwoToneIcon from '@mui/icons-material/RequestQuoteTwoTone';
+import NotificationsActiveTwoToneIcon from '@mui/icons-material/NotificationsActiveTwoTone';
+import AssessmentTwoToneIcon from '@mui/icons-material/AssessmentTwoTone';
+import RoofingTwoToneIcon from '@mui/icons-material/RoofingTwoTone';
+import PersonOutlineTwoToneIcon from '@mui/icons-material/PersonOutlineTwoTone';
+import HubTwoToneIcon from '@mui/icons-material/HubTwoTone';
+import VendorTable from "./VendorList";
+import {FormControlLabel, Switch as MaterialSwitch, useTheme} from '@mui/material';
+import {getCSS} from "../themes/themeUtils";
+import {useEffect} from "react";
 const drawerWidth = 240;
 
 interface Props {
@@ -30,55 +44,173 @@ interface Props {
      * Remove this when copying and pasting into your project.
      */
     window?: () => Window;
+    onThemeToggle: (name: string) => void; // Function to toggle the theme
 }
 
+const label = { inputProps: { 'aria-label': 'Switch demo' } };
 export default function ResponsiveDrawer(props: Props) {
-    const { window } = props;
+    const { window, onThemeToggle } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
 
+    const [mode, setMode] = React.useState("Client");
+
+    const handleChange  = (event: React.ChangeEvent<HTMLInputElement>) =>{
+        if(event.target.checked){
+            setMode("Client")
+        } else {
+            setMode("Vendor")
+        }
+    }
+
+    const [theme, setTheme] = React.useState('day'); // Default theme
+
+    const toggleTheme = () => {
+        setTheme(theme === 'light' ? 'dark' : 'light');
+        onThemeToggle(theme);
+    };
+
+    useEffect(() => {
+        const bodyElement = document.body;
+        if (theme === 'dark') {
+            bodyElement.classList.add('dark-mode');
+        } else {
+            bodyElement.classList.remove('dark-mode');
+        }
+    }, [theme]);
+
+
+    const linkStyle = {
+        textDecoration: 'none',
+        color: useTheme().palette.text.primary, // Use the primary text color from the theme
+    };
+
+
     const drawer = (
         <div>
+            <FormControlLabel style={{paddingLeft: '10px'}}
+                              control={
+                                  <MaterialSwitch {...label} defaultChecked  onChange={handleChange}
+                                                  color="secondary" />
+                              }
+                              label={mode}
+            />
+            <FormControlLabel style={{paddingLeft: '10px'}}
+                              control={
+                                  <MaterialSwitch {...label} defaultChecked  onChange={toggleTheme}
+                                                  color="primary" />
+                              }
+                              label={theme}
+            />
             <Toolbar />
             <Divider />
             <List>
-                {['Home', 'Profile', 'Vendor Search'].map((text, index) => (
-                    <ListItem key={text} disablePadding>
+                    <ListItem key={'Home'} disablePadding>
                         <ListItemButton>
                             <ListItemIcon>
-                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                                <RoofingTwoToneIcon />
                             </ListItemIcon>
-                            <ListItemText primary={text} />
-
+                            <Link to="/" style={linkStyle}>
+                                <ListItemText primary="Home" />
+                            </Link>
                         </ListItemButton>
                     </ListItem>
-                ))}
+                    <ListItem key={'Profile'} disablePadding>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <PersonOutlineTwoToneIcon />
+                            </ListItemIcon>
+                            <Link to="/projects" style={linkStyle}>
+                                <ListItemText primary="Profile" />
+                            </Link>
+                        </ListItemButton>
+                    </ListItem>
+                    <ListItem key={'Vendor Hub'} disablePadding>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <HubTwoToneIcon />
+                            </ListItemIcon>
+                            <Link to="/projects" style={linkStyle}>
+                                <ListItemText primary={(mode==='Client')? "Vendor Hub" : "Client Hub" }/>
+                            </Link>
+                        </ListItemButton>
+                    </ListItem>
             </List>
             <Divider />
             <List>
                 <ListItem key={'Contracts'} disablePadding>
                     <ListItemButton>
                         <ListItemIcon>
-                            {1 % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                            <ArticleTwoToneIcon />
                         </ListItemIcon>
-                        <Link to="/" style={{ textDecoration: 'none', color: 'black' }}>
+                        <Link to="/" style={linkStyle}>
                             <ListItemText primary="Contracts" />
                         </Link>
                     </ListItemButton>
                 </ListItem>
-                {[  'Projects', 'Servicers', 'Invoices', 'Quotes', 'Alerts', 'Reports'].map((text, index) => (
-                    <ListItem key={text} disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
+                <ListItem key={'Projects'} disablePadding>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <FolderCopyTwoToneIcon />
+                        </ListItemIcon>
+                        <Link to="/projects" style={linkStyle}>
+                            <ListItemText primary="Projects" />
+                        </Link>
+                    </ListItemButton>
+                </ListItem>
+                <ListItem key={'Vendors'} disablePadding>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <HailTwoToneIcon />
+                        </ListItemIcon>
+                        <Link to="/vendors" style={linkStyle}>
+                            <ListItemText primary={(mode==='Client')? "Vendors" : "Clients" }/>
+                        </Link>
+                    </ListItemButton>
+                </ListItem>
+                <ListItem key={'Invoices'} disablePadding>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <DescriptionTwoToneIcon />
+                        </ListItemIcon>
+                        <Link to="/projects" style={linkStyle}>
+                            <ListItemText primary="Invoices" />
+                        </Link>
+                    </ListItemButton>
+                </ListItem>
+                <ListItem key={'Quotes'} disablePadding>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <RequestQuoteTwoToneIcon />
+                        </ListItemIcon>
+                        <Link to="/projects" style={linkStyle}>
+                            <ListItemText primary="Quotes" />
+                        </Link>
+                    </ListItemButton>
+                </ListItem>
+                <ListItem key={'Alerts'} disablePadding>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <NotificationsActiveTwoToneIcon />
+                        </ListItemIcon>
+                        <Link to="/projects" style={linkStyle}>
+                            <ListItemText primary="Alerts" />
+                        </Link>
+                    </ListItemButton>
+                </ListItem>
+                <ListItem key={'Reports'} disablePadding>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <AssessmentTwoToneIcon />
+                        </ListItemIcon>
+                        <Link to="/projects" style={linkStyle}>
+                            <ListItemText primary="Reports" />
+                        </Link>
+                    </ListItemButton>
+                </ListItem>
             </List>
         </div>
     );
@@ -87,13 +219,15 @@ export default function ResponsiveDrawer(props: Props) {
     const container = window !== undefined ? () => window().document.body : undefined;
 
     return (
-        <Box sx={{ display: 'flex' }}>
+        <div  id ='1234556' >
+        <Box id ='55555' sx={{ display: 'flex' } }>
             <CssBaseline />
             <AppBar
                 position="fixed"
                 sx={{
                     width: { sm: `calc(100% - ${drawerWidth}px)` },
                     ml: { sm: `${drawerWidth}px` },
+                    backgroundColor: getCSS('--background-color')
                 }}
             >
             </AppBar>
@@ -137,6 +271,8 @@ export default function ResponsiveDrawer(props: Props) {
                 <div>
                         <Switch>
                             <Route path="/" exact component={Dashboard} />
+                            <Route path="/projects" exact component={ProjectTable} />
+                            <Route path="/vendors" exact component={VendorTable} />
                             {/*<Route path="/vendor-auth" render={() => <Auth type="vendor" />} />
                             <Route path="/servicer-auth" render={() => <Auth type="servicer" />} />
                             <Route path="/dashboard" component={ResponsiveDrawer} /> {/* New route */}
@@ -145,5 +281,6 @@ export default function ResponsiveDrawer(props: Props) {
                 </div>
             </Box>
         </Box>
+        </div>
     );
 }
