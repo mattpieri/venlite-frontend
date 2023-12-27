@@ -138,10 +138,10 @@ export default function ContractInvoiceTable() {
     return (
         <div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <Typography variant="h5">Invoices</Typography>
-                <Button onClick={handleOpenScheduledPayments}><AddTwoToneIcon style={{ color: 'purple' }} /></Button>
+                <Typography variant="h5" style={{ padding: "5px"}}>Invoices</Typography>
+                <Button onClick={handleOpenScheduledPayments}><AddTwoToneIcon  /></Button>
             </div>
-
+            <br/>
             <div style={{ height: 400, width: '100%' }}>
                 <DataGrid
                     rows={gridRows}

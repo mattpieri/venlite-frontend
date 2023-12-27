@@ -17,7 +17,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Dashboard from "./Dashboard";
 import CustomTable from "./Dashboard";
-import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom";
+import {BrowserRouter as Router, Link, Route, Switch, useHistory} from "react-router-dom";
 import Selection from "./Selection";
 import Auth from "../containers/Login/Auth";
 import ContractPage from "./ContractPage";
@@ -36,8 +36,32 @@ import VendorTable from "./VendorList";
 import {FormControlLabel, Switch as MaterialSwitch, useTheme} from '@mui/material';
 import {getCSS} from "../themes/themeUtils";
 import {useEffect} from "react";
+import ProfileVendor from "./ProfileClient";
+import ProfileContactForm from "./ProfileContactForm";
+import ProfileAboutForm from "./ProfileAboutForm";
+import ProfileAddLicenseForm from "./ProfileAddLicenseForm";
+import ProfileServiceDetails from "./ProfileServiceDetails";
+import ProfileProjectShowcase from "./ProfileProjectShowcase";
+import BusinessPageForm from "./ProfileBusinessForm";
+import BusinessProfile from "./ProfilePreview";
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import BusinessDataGrid from "./Accounts";
+import ServiceSearchForm from "./VendorSearch";
+import ProfessionalsList from "./VendorsSearchResult";
+import ReviewsIcon from '@mui/icons-material/Reviews';
+import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
+import SpaceDashboardTwoToneIcon from '@mui/icons-material/SpaceDashboardTwoTone';
+import HomeDashboard from "./Home";
+import BackgroundVideo from "./BackgroundVideo";
+import InvoiceScreen from "./Invoices";
+import VendorReview from "./VendorReview";
+import VendorList from "./VendorList";
+import Quotes from "./Quotes";
+import EventList from "./Quotes";
+import MyCalendar from "./Calendar";
+import MessagingInterface from "./Quote";
+import MultipleSelectCheckmarks from "./AccountDropDown";
 const drawerWidth = 240;
-
 interface Props {
     /**
      * Injected by the documentation to work in an iframe.
@@ -73,24 +97,62 @@ export default function ResponsiveDrawer(props: Props) {
         onThemeToggle(theme);
     };
 
-    useEffect(() => {
-        const bodyElement = document.body;
-        if (theme === 'dark') {
-            bodyElement.classList.add('dark-mode');
-        } else {
-            bodyElement.classList.remove('dark-mode');
-        }
-    }, [theme]);
-
 
     const linkStyle = {
         textDecoration: 'none',
         color: useTheme().palette.text.primary, // Use the primary text color from the theme
+        fontFamily: "LatinoType"
     };
 
+    const handleHome = () => {
+        history.push('/home');
+    };
+
+    const handleProfile = () => {
+        history.push('/profile');
+    };
+
+    const handleSearch = () => {
+        history.push('/search');
+    };
+
+    const handleInvoices = () => {
+        history.push('/invoices');
+    };
+
+    const handleContracts = () => {
+        history.push('/');
+    };
+
+    const handleProjects = () => {
+        history.push('/projects');
+    };
+
+    const history = useHistory();
+
+    const handleVendors = () => {
+        history.push('/vendors');
+    };
+
+    const handleAccounts = () => {
+        history.push('/accounts');
+    };
+
+    const handleReviews = () =>{
+        history.push('/reviews');
+    }
+
+    const handleQuotes = () =>{
+        history.push('/quotes');
+    }
+
+    const handleCalendar = () => {
+        history.push('/calendar');
+    }
 
     const drawer = (
         <div>
+
             <FormControlLabel style={{paddingLeft: '10px'}}
                               control={
                                   <MaterialSwitch {...label} defaultChecked  onChange={handleChange}
@@ -105,110 +167,140 @@ export default function ResponsiveDrawer(props: Props) {
                               }
                               label={theme}
             />
+
+            <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    pl: 1
+                    // any other styling you need
+                }}
+            >
+                {/* If logo is in the public folder */}
+                <img src="/travis_logo1.png" alt="Logo" style={{ height: 85}} />
+
+            </Box>
+            <div style={{paddingLeft: '5px', paddingRight: '5px'}}>
+                <MultipleSelectCheckmarks></MultipleSelectCheckmarks>
+
+            </div>
+
             <Toolbar />
             <Divider />
             <List>
-                    <ListItem key={'Home'} disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                <RoofingTwoToneIcon />
-                            </ListItemIcon>
-                            <Link to="/" style={linkStyle}>
-                                <ListItemText primary="Home" />
-                            </Link>
-                        </ListItemButton>
-                    </ListItem>
-                    <ListItem key={'Profile'} disablePadding>
+
+                <ListItem key={'Home'} disablePadding onClick={handleHome}>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <SpaceDashboardTwoToneIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Dashboard" />
+                    </ListItemButton>
+                </ListItem>
+                    <ListItem key={'Profile'} disablePadding onClick={handleProfile}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <PersonOutlineTwoToneIcon />
                             </ListItemIcon>
-                            <Link to="/projects" style={linkStyle}>
                                 <ListItemText primary="Profile" />
-                            </Link>
                         </ListItemButton>
                     </ListItem>
-                    <ListItem key={'Vendor Hub'} disablePadding>
+                    <ListItem key={'Accounts'} disablePadding onClick={handleAccounts}>
                         <ListItemButton>
                             <ListItemIcon>
-                                <HubTwoToneIcon />
+                                <AccountBalanceIcon />
                             </ListItemIcon>
-                            <Link to="/projects" style={linkStyle}>
-                                <ListItemText primary={(mode==='Client')? "Vendor Hub" : "Client Hub" }/>
-                            </Link>
+                            <ListItemText primary="Accounts" />
                         </ListItemButton>
                     </ListItem>
+
+
             </List>
             <Divider />
             <List>
-                <ListItem key={'Contracts'} disablePadding>
+                <ListItem key={'Vendor Hub'} disablePadding onClick={handleSearch}>
                     <ListItemButton>
                         <ListItemIcon>
-                            <ArticleTwoToneIcon />
-                        </ListItemIcon>
-                        <Link to="/" style={linkStyle}>
-                            <ListItemText primary="Contracts" />
-                        </Link>
-                    </ListItemButton>
-                </ListItem>
-                <ListItem key={'Projects'} disablePadding>
-                    <ListItemButton>
-                        <ListItemIcon>
-                            <FolderCopyTwoToneIcon />
+                            <HubTwoToneIcon />
                         </ListItemIcon>
                         <Link to="/projects" style={linkStyle}>
-                            <ListItemText primary="Projects" />
+                            <ListItemText primary={(mode==='Client')? "Job Search" : "Talent Search" }/>
                         </Link>
                     </ListItemButton>
                 </ListItem>
-                <ListItem key={'Vendors'} disablePadding>
-                    <ListItemButton>
-                        <ListItemIcon>
-                            <HailTwoToneIcon />
-                        </ListItemIcon>
-                        <Link to="/vendors" style={linkStyle}>
-                            <ListItemText primary={(mode==='Client')? "Vendors" : "Clients" }/>
-                        </Link>
-                    </ListItemButton>
-                </ListItem>
-                <ListItem key={'Invoices'} disablePadding>
-                    <ListItemButton>
-                        <ListItemIcon>
-                            <DescriptionTwoToneIcon />
-                        </ListItemIcon>
-                        <Link to="/projects" style={linkStyle}>
-                            <ListItemText primary="Invoices" />
-                        </Link>
-                    </ListItemButton>
-                </ListItem>
-                <ListItem key={'Quotes'} disablePadding>
+                <ListItem key={'Quotes'} disablePadding onClick={handleQuotes}>
                     <ListItemButton>
                         <ListItemIcon>
                             <RequestQuoteTwoToneIcon />
                         </ListItemIcon>
-                        <Link to="/projects" style={linkStyle}>
-                            <ListItemText primary="Quotes" />
-                        </Link>
+                        <ListItemText primary="Job Posts" />
                     </ListItemButton>
                 </ListItem>
+                {/*<ListItem key={'Reviews'} disablePadding onClick={handleReviews}>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <ReviewsIcon />
+                        </ListItemIcon>
+                        <Link to="/projects" style={linkStyle}>
+                            <ListItemText primary="Reviews" />
+                        </Link>
+                    </ListItemButton>
+                </ListItem>*/}
+            </List>
+            <Divider />
+
+            <List>
+
+                <ListItem key={'Contracts'} disablePadding  onClick={handleContracts}>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <ArticleTwoToneIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Contracts" />
+                    </ListItemButton>
+                </ListItem>
+                <ListItem key={'Projects'} disablePadding onClick={handleProjects}>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <FolderCopyTwoToneIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Projects" />
+                    </ListItemButton>
+                </ListItem>
+                <ListItem key={'Vendors'} disablePadding onClick={handleVendors}>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <HailTwoToneIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={(mode==='Client')? "Vendors" : "Customers" }/>
+                    </ListItemButton>
+                </ListItem>
+                <ListItem key={'Invoices'} disablePadding onClick={handleInvoices}>
+                <ListItemButton>
+                        <ListItemIcon>
+                            <DescriptionTwoToneIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Invoices" />
+                    </ListItemButton>
+                </ListItem>
+            </List>
+            <Divider></Divider>
+            <List>
                 <ListItem key={'Alerts'} disablePadding>
                     <ListItemButton>
                         <ListItemIcon>
                             <NotificationsActiveTwoToneIcon />
                         </ListItemIcon>
-                        <Link to="/projects" style={linkStyle}>
                             <ListItemText primary="Alerts" />
-                        </Link>
                     </ListItemButton>
                 </ListItem>
-                <ListItem key={'Reports'} disablePadding>
+                <ListItem key={'Calendar'} disablePadding onClick={handleCalendar}>
                     <ListItemButton>
                         <ListItemIcon>
                             <AssessmentTwoToneIcon />
                         </ListItemIcon>
-                        <Link to="/projects" style={linkStyle}>
-                            <ListItemText primary="Reports" />
-                        </Link>
+                            <ListItemText primary="Calendar" />
                     </ListItemButton>
                 </ListItem>
             </List>
@@ -271,7 +363,24 @@ export default function ResponsiveDrawer(props: Props) {
                 <div>
                         <Switch>
                             <Route path="/" exact component={Dashboard} />
+                            <Route path="/home" exact component ={HomeDashboard} />
+                            <Route path="/accounts" exact component={BusinessDataGrid} />
+                            <Route path="/invoices" exact component={InvoiceScreen}/>
+                            <Route path="/search" exact component={BackgroundVideo}/>
+                            <Route path="/search/result" exact component={ProfessionalsList}/>
+                            <Route path="/profile" exact component={ProfileVendor} />
+                            <Route path="/profile/business" exact component={BusinessPageForm} />
+                            <Route path="/profile/contactInfo" exact component={ProfileContactForm} />
+                            <Route path="/profile/about" exact component={ProfileAboutForm} />
+                            <Route path="/profile/licensing" exact component={ProfileAddLicenseForm} />
+                            <Route path="/profile/serviceDetails" exact component={ProfileServiceDetails} />
+                            <Route path="/profile/projectShowCase" exact component={ProfileProjectShowcase} />
+                            <Route path="/profile/preview" exact component={BusinessProfile} />
                             <Route path="/projects" exact component={ProjectTable} />
+                            <Route path="/reviews" exact component={VendorReview} />
+                            <Route path="/calendar" exact component={MyCalendar} />
+                            <Route path="/quotes" exact component={EventList} />
+                            <Route path="/quote" exact component={MessagingInterface}/>
                             <Route path="/vendors" exact component={VendorTable} />
                             {/*<Route path="/vendor-auth" render={() => <Auth type="vendor" />} />
                             <Route path="/servicer-auth" render={() => <Auth type="servicer" />} />

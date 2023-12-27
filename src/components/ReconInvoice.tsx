@@ -89,7 +89,7 @@ export default function ReconInvoiceTable() {
     return (
         <div style={ {padding:'5px'}}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <Typography variant="h5">Invoice vs Scheduled Payments</Typography>
+                <Typography variant="h5" style={{paddingLeft:'5px'}}>Invoice vs Scheduled Payments</Typography>
             </div>
             <br/>
             <StackOffsetDemo></StackOffsetDemo>

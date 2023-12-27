@@ -6,13 +6,14 @@ import InputSelect from "./InputSelect";
 import {Button, Table, TableBody, TableCell, TableContainer, TableRow, Typography} from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArticleTwoToneIcon from '@mui/icons-material/ArticleTwoTone';
+import PersonOutlineTwoToneIcon from "@mui/icons-material/PersonOutlineTwoTone";
 
-const ContractEdit: React.FC = () => {
+const ProfileClientEdit: React.FC = () => {
 
 
-    const [closeDate, setCloseDate] = useState<dayjs.Dayjs>(dayjs('2021-02-01'));
-    const handleCloseDateChange = (newDate: dayjs.Dayjs) => {
-        setCloseDate(newDate);
+    const [businessLocation, setBusinessLocation] = useState<string>("");
+    const handleLocationChange = (newBusinessLocation: string) => {
+        setBusinessLocation(newBusinessLocation);
     };
 
     const [endDate, setEndDate] = useState<dayjs.Dayjs>(dayjs('2021-02-01'));
@@ -25,11 +26,29 @@ const ContractEdit: React.FC = () => {
         setContractValue(newContractValue);
     };
 
-    const contractValueSelections = [
-        { value: 'Net 15', label: 'Net 15' },
-        { value: 'Net 30', label: 'Net 30' },
-        { value: 'Net 45', label: 'Net 45' },
-        { value: 'Net 60', label: 'Net 60' },
+    const contractBusinessLocations = [
+        { value: 'United States', label: 'United States' },
+        { value: 'Canada', label: 'Canada' },
+        { value: 'United Kingdom', label: 'United Kingdom' },
+        { value: 'Australia', label: 'Australia' },
+        { value: 'Germany', label: 'Germany' },
+        { value: 'France', label: 'France' },
+        { value: 'Japan', label: 'Japan' },
+        { value: 'China', label: 'China' },
+        { value: 'India', label: 'India' },
+        { value: 'Brazil', label: 'Brazil' },
+        { value: 'South Africa', label: 'South Africa' },
+        { value: 'Netherlands', label: 'Netherlands' },
+        { value: 'Italy', label: 'Italy' },
+        { value: 'Spain', label: 'Spain' },
+        { value: 'Mexico', label: 'Mexico' },
+        { value: 'Russia', label: 'Russia' },
+        { value: 'South Korea', label: 'South Korea' },
+        { value: 'Sweden', label: 'Sweden' },
+        { value: 'Norway', label: 'Norway' },
+        { value: 'Denmark', label: 'Denmark' },
+        { value: 'Switzerland', label: 'Switzerland' },
+        { value: 'Belgium', label: 'Belgium' },
     ];
 
     const [paymentTerms, setPaymentTerms] = useState<string>("Net 30");
@@ -111,7 +130,7 @@ const ContractEdit: React.FC = () => {
 
 
     const EditStates = {
-        CLOSE_DATE: 'CLOSE_DATE',
+        LOCATION: 'LOCATION',
         END_DATE: 'END_DATE',
         CONTRACT_VALUE: 'CONTRACT_VALUE',
         PAYMENT_TERMS: 'PAYMENT_TERMS',
@@ -130,19 +149,13 @@ const ContractEdit: React.FC = () => {
 
     const [editState, setEditState] = useState<string | null>(null);
 
-    const handleEditCloseDate = () => setEditState(EditStates.CLOSE_DATE);
+    const handleEditLocation = () => setEditState(EditStates.LOCATION);
     const handleEditEndDate = () => setEditState(EditStates.END_DATE);
     const handleEditContractValue = () => setEditState(EditStates.CONTRACT_VALUE);
     const handleEditPaymentTerms = () => setEditState(EditStates.PAYMENT_TERMS);
     const handleEditRenewalTerms = () => setEditState(EditStates.RENEWAL_TERMS);
     const handleEditCancellationPolicy = () => setEditState(EditStates.CANCELLATION_POLICY);
     const handleEditConfidentialityClause = () => setEditState(EditStates.CONFIDENTIALITY_CLAUSE);
-    const handleEditLiabilityClause = () => setEditState(EditStates.LIABILITY_CLAUSE);
-    const handleEditDisputeResolution = () => setEditState(EditStates.DISPUTE_RESOLUTION);
-    const handleEditSignature = () => setEditState(EditStates.SIGNATURE);
-    const handleEditAttachments = () => setEditState(EditStates.ATTACHMENTS);
-    const handleEditNotes = () => setEditState(EditStates.NOTES);
-    const handleEditStatus = () => setEditState(EditStates.STATUS);
 
 
     const style = {
@@ -159,18 +172,14 @@ const ContractEdit: React.FC = () => {
 
     const renderEditComponent = () => {
         switch (editState) {
-            case EditStates.CLOSE_DATE:
-                return ( <div style={{height: '1000px'}}>
-                    < ResponsiveDatePickers  currentValue={closeDate} goBack={() => setEditState(EditStates.NONE)} onDateChange={handleCloseDateChange} label={"Close Date"}/>;
-                    </div> );
+            case EditStates.LOCATION:
+                return  <InputSelect currentValue={paymentTerms} goBack={ () => setEditState(EditStates.NONE)} onDataChange={handleLocationChange} label={"Business Location"} selections={contractBusinessLocations}/>;
             case EditStates.END_DATE:
-                return  ( <div style={{height: '1000px'}}>
-                    <ResponsiveDatePickers currentValue={endDate} goBack={() => setEditState(EditStates.NONE)} onDateChange={handleEndDateChange} label={"End Date"}/>;
-                </div>)
+                return  <ResponsiveDatePickers currentValue={endDate} goBack={() => setEditState(EditStates.NONE)} onDateChange={handleEndDateChange} label={"End Date"}/>;
             case EditStates.CONTRACT_VALUE:
                 return  <BasicTextFields currentValue={contractValue} goBack={ () => setEditState(EditStates.NONE)} onDataChange={handleContractValueChange} label={"Contract Value"} />;
             case EditStates.PAYMENT_TERMS:
-                return  <InputSelect currentValue={paymentTerms} goBack={ () => setEditState(EditStates.NONE)} onDataChange={handlePaymentTermsChange} label={"Payment Terms"} selections={contractValueSelections}/>;
+                return  <InputSelect currentValue={paymentTerms} goBack={ () => setEditState(EditStates.NONE)} onDataChange={handlePaymentTermsChange} label={"Payment Terms"} selections={contractBusinessLocations}/>;
             case EditStates.RENEWAL_TERMS:
                 return  <InputSelect currentValue={renewalTerms} goBack={ () => setEditState(EditStates.NONE)} onDataChange={handleRenewalTermsChange} label={"Renewal Terms"} selections={renewalTermsSelections}/>;
             case EditStates.CANCELLATION_POLICY:
@@ -196,107 +205,73 @@ const ContractEdit: React.FC = () => {
         } else {
             // Render the table if no edit state is set
             return (
-                <div style={{height: '1000px'}}>
+                <div>
 
-                    <Typography gutterBottom variant="h5" component="div">
-                        Contract Info
-                    </Typography>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}> {/* Centering the icon */}
+                        <PersonOutlineTwoToneIcon style={{  fontSize: '80px' }} /> {/* Setting icon color */}
+                    </div>
+                    <Typography variant="h5" style={{ textAlign: 'center' }} >Profile</Typography>
+                    <br/>
+
                     <TableContainer>
                         <Table>
                             <TableBody>
-                                <TableRow hover onClick={handleEditCloseDate}>
-                                    <TableCell><strong>Close Date:</strong></TableCell>
-                                    <TableCell>{closeDate.toString()}</TableCell>
+                                <TableRow hover onClick={handleEditLocation}>
+                                    <TableCell><strong>Business Location:</strong></TableCell>
+                                    <TableCell>{businessLocation}</TableCell>
                                     <TableCell align="right">
                                         <ArrowForwardIosIcon style={{ color: 'blue', fontSize: 'small' }} />
                                     </TableCell>
                                 </TableRow>
                                 <TableRow hover  onClick={handleEditEndDate}>
-                                    <TableCell><strong>End Date:</strong></TableCell>
+                                    <TableCell><strong>Legal Name:</strong></TableCell>
                                     <TableCell>{endDate.toString()}</TableCell>
                                     <TableCell align="right">
                                         <ArrowForwardIosIcon style={{ color: 'blue', fontSize: 'small' }} />
                                     </TableCell>
                                 </TableRow>
                                 <TableRow hover onClick={handleEditContractValue}>
-                                    <TableCell><strong>Contract Value:</strong></TableCell>
+                                    <TableCell><strong>Email Address:</strong></TableCell>
                                     <TableCell>{contractValue}</TableCell>
                                     <TableCell align="right">
                                         <ArrowForwardIosIcon style={{ color: 'blue', fontSize: 'small' }} />
                                     </TableCell>
                                 </TableRow>
                                 <TableRow hover onClick={handleEditPaymentTerms}>
-                                    <TableCell><strong>Payment Terms:</strong></TableCell>
+                                    <TableCell><strong>Address:</strong></TableCell>
                                     <TableCell>{paymentTerms}</TableCell>
                                     <TableCell align="right">
                                         <ArrowForwardIosIcon style={{ color: 'blue', fontSize: 'small' }} />
                                     </TableCell>
                                 </TableRow >
                                 <TableRow hover onClick={handleEditRenewalTerms}>
-                                    <TableCell><strong>Renewal Terms:</strong></TableCell>
+                                    <TableCell><strong>Phone Number:</strong></TableCell>
                                     <TableCell>{renewalTerms}</TableCell>
                                     <TableCell align="right">
                                         <ArrowForwardIosIcon style={{ color: 'blue', fontSize: 'small' }} />
                                     </TableCell>
                                 </TableRow>
                                 <TableRow hover onClick={handleEditCancellationPolicy}>
-                                    <TableCell><strong>Cancellation Policy:</strong></TableCell>
+                                    <TableCell><strong>Industry:</strong></TableCell>
                                     <TableCell>{cancellationPolicy}</TableCell>
                                     <TableCell align="right">
                                         <ArrowForwardIosIcon style={{ color: 'blue', fontSize: 'small' }} />
                                     </TableCell>
                                 </TableRow>
                                 <TableRow hover onClick={handleEditConfidentialityClause}>
-                                    <TableCell><strong>Confidentiality Clause:</strong></TableCell>
+                                    <TableCell><strong>Business Website:</strong></TableCell>
                                     <TableCell>{confidentialityClause}</TableCell>
                                     <TableCell align="right">
                                         <ArrowForwardIosIcon style={{ color: 'blue', fontSize: 'small' }} />
                                     </TableCell>
                                 </TableRow>
-                                <TableRow hover onClick={handleEditLiabilityClause}>
-                                    <TableCell><strong>Liability Clauses:</strong></TableCell>
-                                    <TableCell>{liabilityClause}</TableCell>
+                                <TableRow hover onClick={handleEditConfidentialityClause}>
+                                    <TableCell><strong>Accounts:</strong></TableCell>
+                                    <TableCell>{confidentialityClause}</TableCell>
                                     <TableCell align="right">
                                         <ArrowForwardIosIcon style={{ color: 'blue', fontSize: 'small' }} />
                                     </TableCell>
                                 </TableRow>
-                                <TableRow hover onClick = {handleEditDisputeResolution}>
-                                    <TableCell><strong>Dispute Resolution:</strong></TableCell>
-                                    <TableCell>{disputeResolution}</TableCell>
-                                    <TableCell align="right">
-                                        <ArrowForwardIosIcon style={{ color: 'blue', fontSize: 'small' }} />
-                                    </TableCell>
-                                </TableRow>
-                                <TableRow hover onClick = {handleEditSignature}>
-                                    <TableCell><strong>Signature:</strong></TableCell>
-                                    <TableCell>{signature}</TableCell>
-                                    <TableCell align="right">
-                                        <ArrowForwardIosIcon style={{ color: 'blue', fontSize: 'small' }} />
-                                    </TableCell>
-                                </TableRow>
-                                <TableRow hover onClick={handleEditAttachments}>
-                                    <TableCell><strong>Attachments:</strong></TableCell>
-                                    <TableCell>{'Contract.pdf'}</TableCell>
-                                    <TableCell align="right">
-                                        <ArrowForwardIosIcon style={{ color: 'blue', fontSize: 'small' }} />
-                                    </TableCell>
-                                </TableRow>
-                                <TableRow hover onClick = {handleEditNotes}>
-                                    <TableCell><strong>Notes:</strong></TableCell>
-                                    <TableCell>{'Simple Note'}</TableCell>
-                                    <TableCell align="right">
-                                        <ArrowForwardIosIcon style={{ color: 'blue', fontSize: 'small' }} />
-                                    </TableCell>
-                                </TableRow>
-                                <TableRow hover onClick={handleEditStatus}>
-                                    <TableCell><strong>Status:</strong></TableCell>
-                                    <TableCell>{'ACTIVE'}</TableCell>
-                                    <TableCell align="right">
-                                        <ArrowForwardIosIcon style={{ color: 'blue', fontSize: 'small' }} />
-                                    </TableCell>
-                                </TableRow>
-
-
                             </TableBody>
                         </Table>
                     </TableContainer>
@@ -307,8 +282,8 @@ const ContractEdit: React.FC = () => {
 
 
     return (
-       renderContent()
+        renderContent()
     );
 };
 
-export default ContractEdit;
+export default ProfileClientEdit;

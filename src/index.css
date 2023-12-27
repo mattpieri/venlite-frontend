@@ -17,3 +17,29 @@ body.dark-mode {
   background-color: #2c2929;
   color: #dadada;
 }
+
+@font-face {
+  font-family: 'Bangers';
+  src: local('Bangers'), url('./Bangers-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'LatinoType';
+  src: local('LatinoType'), url('./PatuaOne-Regular.ttf') format('truetype');
+}
+
+body {
+  font-family: 'Bangers', sans-serif;
+}
+
+.rbc-timeslot-group {
+  min-height: 70px;
+}
+
+.rbc-day-slot .rbc-time-slot {
+  border-top: 1px solid darkgrey;
+}
+
+.rbc-current-time-indicator {
+  background-color: red;
+}

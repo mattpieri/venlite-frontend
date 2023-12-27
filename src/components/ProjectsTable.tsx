@@ -1,7 +1,7 @@
 import CustomTable from "./Dashboard";
 import * as React from "react";
 import {useState} from "react";
-import {Button, Typography} from "@mui/material";
+import {Button, Paper, Typography} from "@mui/material";
 import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
 import {DataGrid, GridColDef, GridRenderCellParams} from "@mui/x-data-grid";
 import Modal from "@mui/material/Modal";
@@ -107,16 +107,14 @@ const ProjectTable = () => {
     };
 
     return (
+        <Paper style={{ padding: "20px"}}>
         <div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <Typography variant="h5">Projects</Typography>
                 <Button onClick={handleOpenScheduledPayments}
                         variant="contained"
                         startIcon={<AddTwoToneIcon style={{ fontSize: 'small' }} />}
-                        style={{
-                            backgroundColor: 'purple', // Set the button color to purple
-                            color: 'darkpurple' // Set the text color to dark purple (replace with actual color code)
-                        }}
+
                 >
                     Add Project
                 </Button>
@@ -147,6 +145,8 @@ const ProjectTable = () => {
                 </Box>
             </Modal>
         </div>
+        </Paper>
+
     )
 
 }

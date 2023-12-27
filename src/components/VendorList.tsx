@@ -1,7 +1,7 @@
 import CustomTable from "./Dashboard";
 import * as React from "react";
 import {useState} from "react";
-import {Button, Typography} from "@mui/material";
+import {Button, Paper, TextField, Typography} from "@mui/material";
 import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
 import {DataGrid, GridColDef, GridRenderCellParams} from "@mui/x-data-grid";
 import Modal from "@mui/material/Modal";
@@ -134,21 +134,19 @@ const VendorTable = () => {
     };
 
     return (
+        <Paper style={{ padding: "20px"}}>
         <div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <Typography variant="h5">Vendors</Typography>
                 <Button onClick={handleOpenScheduledPayments}
                         variant="contained"
                         startIcon={<AddTwoToneIcon style={{ fontSize: 'small' }} />}
-                        style={{
-                            backgroundColor: 'purple', // Set the button color to purple
-                            color: 'darkpurple' // Set the text color to dark purple (replace with actual color code)
-                        }}
                 >
                     Add Vendor
                 </Button>
             </div>
             <br/>
+            <TextField  fullWidth sx={{ mb: 2 }} label="Search" id="fullWidth" />
 
             <div style={{ height: 400, width: '100%' }}>
                 <DataGrid
@@ -174,6 +172,8 @@ const VendorTable = () => {
                 </Box>
             </Modal>
         </div>
+        </Paper>
+
     )
 
 }

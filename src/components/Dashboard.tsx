@@ -2,7 +2,7 @@
 import React from 'react';
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
-import {Button, Typography} from "@mui/material";
+import {Button, Paper, TextField, Typography} from "@mui/material";
 import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
 import Box from "@mui/material/Box";
 import ContractEdit from "./ContractEdit";
@@ -278,28 +278,28 @@ const CustomTable: React.FC = () => {
     const handleContractDetailsClose = () => setOpenContractDetails(false);
 
     return (
-        <div style={{ height: 1000, width: '100%' }}>
-
+        <Paper style = {{padding: "20px"}}>
+        <div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <Typography variant="h4">Contracts</Typography>
+                <Typography variant="h5" style={{paddingLeft:'5px'}}>Contracts</Typography>
                 <Button onClick={handleContractDetailsOpen}
                         variant="contained"
                         startIcon={<AddTwoToneIcon style={{ fontSize: 'small' }} />}
-                        style={{
-                            backgroundColor: 'purple', // Set the button color to purple
-                            color: 'darkpurple' // Set the text color to dark purple (replace with actual color code)
-                        }}
+
                 >
                 Add contract
                 </Button>
             </div>
             <br/>
+            <TextField  fullWidth sx={{ mb: 2 }} label="Search" id="fullWidth" />
+            <div style={{ height: 400, width: '100%' }}>
             <DataGrid
                 rows={data}
                 columns={columns}
                 autoPageSize={true}
                 checkboxSelection
             />
+            </div>
             <Modal
                 open={openContractDetails}
                 onClose={handleContractDetailsClose}
@@ -316,6 +316,7 @@ const CustomTable: React.FC = () => {
                 </Box>
             </Modal>
         </div>
+        </Paper>
 
     );
 };

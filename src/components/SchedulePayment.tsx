@@ -115,9 +115,9 @@ export default function DataTable() {
     return (
         <div>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Typography variant="h5">Scheduled Payments</Typography>
-            <Button onClick={handleOpenScheduledPayments}><AddTwoToneIcon style={{ color: 'purple' }} /></Button>
-        </div>
+            <Typography variant="h5" style={{ padding: "5px"}}>Contract Scheduled Cashflows</Typography>
+            <Button onClick={handleOpenScheduledPayments}><AddTwoToneIcon /></Button>
+        </div><br/>
 
         <div style={{ height: 400, width: '100%' }}>
             <DataGrid

@@ -108,8 +108,8 @@ const ContractPage: React.FC = () => {
         } else {
             return (
                 <Paper style={{ height: 400, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                    <AutoAwesomeTwoToneIcon className="gradient-icon" onClick={handleRunRecon} style={{ fontSize: '100px', cursor: 'pointer', color: 'purple' }} />
-                    <Typography variant="subtitle1" style={{color:'purple'}} >Run Invoice Recon</Typography>
+                    <Button onClick={handleRunRecon}><AutoAwesomeTwoToneIcon style={{ fontSize: '100px', cursor: 'pointer' }} /></Button>
+                    <Typography variant="subtitle1" >Run Invoice Recon</Typography>
                 </Paper>
             )
         }
@@ -117,15 +117,9 @@ const ContractPage: React.FC = () => {
 
     return (
         <div>
-            <Typography variant="h4">Contract: {contractData.contractId}</Typography>
-            <br/>
-            <Paper elevation={3} style={{padding:"5px"}}>
-                <Typography variant="h5">Timeline</Typography>
-                <AlternateTimeline></AlternateTimeline>
-            </Paper>
-            <br/>
-            <Paper elevation={3} style={{ padding: "5px", color: getCSS('--text-color') }}>
-                <Typography variant="h5">Scope of Work</Typography>
+            <Paper elevation={3} style={{ padding: "5px"}}>
+                <Typography variant="h4"  style={{ padding: "5px"}}>Contract: {contractData.contractId}</Typography>
+                <Typography variant="h5" style={{ padding: "5px"}}>Scope of Work</Typography>
                 <List>
                     <ListItem>
                         <Typography>{'Replace all plumbing fixtures in the existing bathrooms.'}</Typography>
@@ -139,11 +133,16 @@ const ContractPage: React.FC = () => {
                 </List>
             </Paper>
             <br/>
+            <Paper elevation={3} style={{padding:"5px"}}>
+                <Typography variant="h5" style={{ padding: "5px"}}>Timeline</Typography>
+                <AlternateTimeline></AlternateTimeline>
+            </Paper>
+            <br/>
             <div style={{display:"flex",  gap: "15px"}}>
                 <Paper elevation={3} style={{padding:"5px", width:'45%'}} >
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <Typography variant="h5">Contract Details</Typography>
-                        <Button onClick={handleContractDetailsOpen}><EditTwoToneIcon  style={{ color: 'purple' }} /></Button>
+                        <Typography variant="h5" style={{ padding: "5px"}}>Contract Details</Typography>
+                        <Button onClick={handleContractDetailsOpen}><EditTwoToneIcon   /></Button>
                     </div>
                     <TableContainer>
                         <Table>
